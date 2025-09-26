@@ -9,7 +9,7 @@ export default class Nav extends PureComponent {
   };
 
   componentDidMount() {
-    fetch('http://localhost:5000/words')
+    fetch('https://vercel-word-learning-server.vercel.app/api/words')
       .then((res) => res.json())
       .then((data) => this.setState({ words: data }))
       .catch((err) => console.error('Error fetching words:', err));
@@ -20,8 +20,8 @@ export default class Nav extends PureComponent {
     const { words } = this.state;
     const suggestions = value
       ? words.filter((w) =>
-          w.word.toLowerCase().startsWith(value.toLowerCase())
-        )
+        w.word.toLowerCase().startsWith(value.toLowerCase())
+      )
       : [];
     this.setState({ searchTerm: value, suggestions });
   };
@@ -85,7 +85,12 @@ export default class Nav extends PureComponent {
               <p className="font-bold text-2xl mb-2">{selectedWord.word} <span className="text-gray-500">({selectedWord.type})</span></p>
               <p className="mb-2 text-gray-700"><strong>Meaning:</strong> {selectedWord.meaning}</p>
               <p className="mb-2 text-gray-600"><strong>Synonyms:</strong> {selectedWord.synonyms}</p>
-              <p className="text-gray-600"><strong>Examples:</strong> {selectedWord.examples}</p>
+              <p className="text-gray-600"><strong>Examples:</strong></p>
+              {Array.isArray(selectedWord.examples) &&
+                selectedWord.examples.map((ex, idx) => (
+                  <p key={idx} className="text-gray-600 ml-2">{ex}</p>
+                ))}
+
             </div>
           </div>
         )}

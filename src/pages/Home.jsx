@@ -11,7 +11,7 @@ const Home = () => {
   useEffect(() => {
     const fetchWords = async () => {
       try {
-        const res = await fetch("http://localhost:5000/words");
+        const res = await fetch("https://vercel-word-learning-server.vercel.app/api/words");
         if (!res.ok) throw new Error(`Response status: ${res.status}`);
         const data = await res.json();
         setWords(data);
